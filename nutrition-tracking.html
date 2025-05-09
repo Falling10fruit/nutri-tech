@@ -1,0 +1,300 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Nutrition Tracking - Innovating Nutrition</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://live.staticflickr.com/65535/54507217731_45f5d8a562_o_d.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .navbar {
+            background-color: #28a745;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .nav-link:hover {
+            color: #e0e0e0 !important;
+        }
+        footer {
+            background-color: #28a745;
+            color: white;
+            padding: 40px 0;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .feature-img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #analysisResult {
+            display: none;
+        }
+        .meal-log-item {
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px 0;
+        }
+        #noMatchMessage {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Innovating Nutrition</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4">Smart Nutrition Tracking</h1>
+            <p class="lead">Personalized dietary insights powered by AI.</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h2>How It Works</h2>
+                    <p>Our Smart Nutrition Tracking uses advanced AI to analyze your meals and provide real-time feedback. Simply snap a photo of your plate, and our technology identifies ingredients, calculates nutritional content, and suggests improvements tailored to your health goals.</p>
+                    <ul>
+                        <li><strong>Meal Scanning:</strong> Use your smartphone camera to capture meals.</li>
+                        <li><strong>Nutrient Analysis:</strong> Get instant breakdowns of calories, macronutrients, and micronutrients.</li>
+                        <li><strong>Personalized Recommendations:</strong> Receive suggestions based on your dietary preferences, such as low-carb or gluten-free.</li>
+                    </ul>
+                    <a href="index.html#contact" class="btn btn-success">Get Started</a>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <img src="https://live.staticflickr.com/65535/54506349422_41338779e4_o_d.jpg" class="feature-img" alt="Meal Scanning">
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <h2>Try It Now</h2>
+                    <p>Enter a meal description to see a sample nutritional analysis (e.g., chicken salad, pizza).</p>
+                    <form id="nutritionForm">
+                        <div class="mb-3">
+                            <label for="mealDescription" class="form-label">Meal Description</label>
+                            <textarea class="form-control" id="mealDescription" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Analyze Meal</button>
+                    </form>
+                    <div id="noMatchMessage" class="alert alert-warning mt-3">
+                        Please enter a valid meal description.
+                    </div>
+                    <div id="analysisResult" class="alert alert-info mt-3">
+                        <h5>Nutritional Breakdown</h5>
+                        <p id="resultText"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <h2>Meal Log History</h2>
+                    <p>View your recently analyzed meals.</p>
+                    <div id="mealLogList"></div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <h2>Benefits</h2>
+                    <p>With Smart Nutrition Tracking, you gain control over your diet like never before. Whether you're managing weight, improving energy levels, or addressing medical conditions, our platform empowers you with data-driven insights.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Accuracy</h5>
+                            <p>Our AI is trained on millions of food images for precise identification.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Ease of Use</h5>
+                            <p>Intuitive interface designed for all ages and tech levels.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Customization</h5>
+                            <p>Tailored to your unique health goals and dietary needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-2">© 2025 Innovating Nutrition. All Rights Reserved.</p>
+            <p>
+                <a href="#" class="text-white me-2">Privacy Policy</a> |
+                <a href="#" class="text-white ms-2">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Nutrition analysis and meal log
+        const mealLog = JSON.parse(localStorage.getItem('mealLog')) || [];
+        const renderMealLog = () => {
+            const mealLogList = document.getElementById('mealLogList');
+            mealLogList.innerHTML = '';
+            mealLog.forEach((meal, index) => {
+                const logItem = document.createElement('div');
+                logItem.className = 'meal-log-item d-flex justify-content-between align-items-center';
+                logItem.innerHTML = `
+                    <div>
+                        <strong>${meal.description}</strong><br>
+                        Calories: ${meal.calories} kcal, Protein: ${meal.protein}g, Carbs: ${meal.carbs}g, Fat: ${meal.fat}g
+                    </div>
+                    <button class="btn btn-danger btn-sm" onclick="deleteMeal(${index})">Delete</button>
+                `;
+                mealLogList.appendChild(logItem);
+            });
+        };
+
+        const deleteMeal = (index) => {
+            mealLog.splice(index, 1);
+            localStorage.setItem('mealLog', JSON.stringify(mealLog));
+            renderMealLog();
+        };
+
+        document.getElementById('nutritionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const description = document.getElementById('mealDescription').value.trim();
+            const resultText = document.getElementById('resultText');
+            const analysisResult = document.getElementById('analysisResult');
+            const noMatchMessage = document.getElementById('noMatchMessage');
+
+            // Validate input
+            if (!description) {
+                console.log('Empty meal description');
+                noMatchMessage.style.display = 'block';
+                analysisResult.style.display = 'none';
+                return;
+            } else {
+                noMatchMessage.style.display = 'none';
+            }
+
+            // Generate random nutritional values
+            const calories = Math.floor(Math.random() * (500 - 100 + 1)) + 100; // 100–500 kcal
+            const protein = Math.floor(Math.random() * (40 - 5 + 1)) + 5;     // 5–40 g
+            const carbs = Math.floor(Math.random() * (60 - 10 + 1)) + 10;     // 10–60 g
+            const fat = Math.floor(Math.random() * (20 - 5 + 1)) + 5;         // 5–20 g
+
+            console.log(`Analyzing meal: ${description}`);
+            console.log(`Generated: Calories=${calories}, Protein=${protein}, Carbs=${carbs}, Fat=${fat}`);
+
+            const mealData = { description, calories, protein, carbs, fat };
+            mealLog.push(mealData);
+            localStorage.setItem('mealLog', JSON.stringify(mealLog));
+
+            resultText.innerHTML = `
+                Calories: ${calories} kcal<br>
+                Protein: ${protein}g<br>
+                Carbohydrates: ${carbs}g<br>
+                Fat: ${fat}g<br>
+                <small>This is a simplified demo with random values. Actual analysis uses AI for precision.</small>
+            `;
+            analysisResult.style.display = 'block';
+            renderMealLog();
+            this.reset();
+        });
+
+        // Initial render of meal log
+        renderMealLog();
+    </script>
+</body>
+</html>
