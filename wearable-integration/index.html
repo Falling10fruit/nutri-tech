@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wearable Integration - Innovating Nutrition</title>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="index.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script src="xlsxToCSV.js"></script>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">Innovating Nutrition</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="display-4">Wearable Integration</h1>
+                <p class="lead">Connect your devices for a holistic health experience.</p>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <h2>Seamless Connectivity</h2>
+                        <p>Our platform integrates with popular wearables like Apple Watch, Fitbit, and Garmin to track your physical activity, heart rate, and sleep patterns. This data is combined with your nutrition profile to provide comprehensive health insights.</p>
+                        <ul>
+                            <li><strong>Device Syncing:</strong> Connect in seconds with our app.</li>
+                            <li><strong>Real-Time Monitoring:</strong> Track metrics like steps, calories, and sleep quality.</li>
+                            <li><strong>Health Insights:</strong> Receive tips based on your activity and nutrition data.</li>
+                        </ul>
+                        <a href="index.html#contact" class="btn btn-success">Get Started</a>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <img src="https://live.staticflickr.com/65535/54507403289_98aa80683c_o_d.jpg" class="feature-img" alt="Wearable Device">
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <h2>Live Activity Tracker</h2>
+                        <p>Experience real-time step tracking with our wearable integration.</p>
+                        <div class="live-tracker">
+                            <h3 id="liveSteps">0</h3>
+                            <p>Steps Today</p>
+                            <button class="btn btn-success" onclick="startTracker()">Start Tracker</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <h2>Sample Activity Dashboard</h2>
+                        <p>Visualize your wearable data with our intuitive charts.</p>
+                        <div class="chart-container">
+                            <canvas id="activityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <h2>Why It Matters</h2>
+                        <p>Wearable integration bridges the gap between nutrition and physical health, giving you a complete picture of your wellness journey. Stay motivated with personalized goals and actionable feedback.</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5>Holistic Tracking</h5>
+                                <p>Combines nutrition and activity data for better results.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>Motivation</h5>
+                                <p>Visualize progress with intuitive dashboards.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>Compatibility</h5>
+                                <p>Works with a wide range of wearable devices.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center">
+            <div class="container">
+                <p class="mb-2">© 2025 Innovating Nutrition. All Rights Reserved.</p>
+                <p>
+                    <a href="#" class="text-white me-2">Privacy Policy</a> |
+                    <a href="#" class="text-white ms-2">Terms of Service</a>
+                </p>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS and Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>

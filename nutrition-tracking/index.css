@@ -1,0 +1,60 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://live.staticflickr.com/65535/54507217731_45f5d8a562_o_d.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.navbar {
+    background-color: #28a745;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+
+.nav-link:hover {
+    color: #e0e0e0 !important;
+}
+
+footer {
+    background-color: #28a745;
+    color: white;
+    padding: 40px 0;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.feature-img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#analysisResult {
+    display: none;
+}
+
+.meal-log-item {
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px 0;
+}
+
+#noMatchMessage {
+    display: none;
+}

@@ -1,0 +1,86 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.hero-section {
+    position: relative;
+    color: white;
+    padding: 150px 0;
+    text-align: center;
+}
+
+.carousel-item {
+    background-size: cover;
+    background-position: center;
+    z-index: 0; /* Ensure carousel item is behind controls */
+}
+
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1; /* Overlay above carousel item */
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2; /* Text content above overlay */
+}
+
+.carousel-control-prev, .carousel-control-next {
+    z-index: 3; /* Controls above overlay and item */
+}
+
+.feature-card {
+    transition: transform 0.3s;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.navbar {
+    background-color: #28a745;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+
+.nav-link:hover {
+    color: #e0e0e0 !important;
+}
+
+footer {
+    background-color: #28a745;
+    color: white;
+    padding: 40px 0;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.about-section img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.contact-info {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
