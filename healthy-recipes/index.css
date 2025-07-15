@@ -1,0 +1,79 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://live.staticflickr.com/65535/54506349337_f8f2d88e9c_o_d.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.navbar {
+    background-color: #28a745;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+
+.nav-link:hover {
+    color: #e0e0e0 !important;
+}
+
+footer {
+    background-color: #28a745;
+    color: white;
+    padding: 40px 0;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.feature-img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#recipeList:empty::before {
+    content: 'No recipes found.';
+    display: block;
+    text-align: center;
+    color: #6c757d;
+}
+
+.star-rating {
+    display: inline-block;
+}
+
+.star-rating .star {
+    cursor: pointer;
+    color: #ddd;
+    font-size: 1.2rem;
+    margin-right: 2px;
+}
+
+.star-rating .star.filled {
+    color: #ffc107;
+}
+
+#ratingMessage {
+    display: none;
+}

@@ -1,457 +1,347 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innovating Nutrition: Technology for a Healthier Future</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-        }
-        .hero-section {
-            position: relative;
-            color: white;
-            padding: 150px 0;
-            text-align: center;
-        }
-        .carousel-item {
-            background-size: cover;
-            background-position: center;
-            z-index: 0; /* Ensure carousel item is behind controls */
-        }
-        .carousel-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1; /* Overlay above carousel item */
-        }
-        .hero-section .container {
-            position: relative;
-            z-index: 2; /* Text content above overlay */
-        }
-        .carousel-control-prev, .carousel-control-next {
-            z-index: 3; /* Controls above overlay and item */
-        }
-        .feature-card {
-            transition: transform 0.3s;
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        .navbar {
-            background-color: #28a745;
-        }
-        .navbar-brand, .nav-link {
-            color: white !important;
-        }
-        .nav-link:hover {
-            color: #e0e0e0 !important;
-        }
-        footer {
-            background-color: #28a745;
-            color: white;
-            padding: 40px 0;
-        }
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-        .btn-success:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-        }
-        .about-section img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-        .contact-info {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Innovating Nutrition</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Innovating Nutrition: Technology for a Healthier Future</title>
 
-    <!-- Hero Section (Home) -->
-    <section id="home" class="hero-section">
-        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active" style="background-image: url('https://live.staticflickr.com/65535/54507403509_c2008d1ed1_o_d.jpg');">
-                    <div class="carousel-overlay"></div>
-                    <div class="container">
-                        <h1 class="display-3">Innovating Nutrition</h1>
-                        <p class="lead mb-4">Transforming lives through cutting-edge technology for a healthier, sustainable future.</p>
-                        <p>Our mission is to empower individuals with personalized nutrition solutions, leveraging AI, wearables, and data-driven insights to make healthy eating effortless and accessible.</p>
-                        <a href="#features" class="btn btn-success btn-lg mt-3">Explore Our Solutions</a>
-                        <button type="button" class="btn btn-outline-light btn-lg mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#healthQuizModal">Take Our Health Quiz</button>
-                    </div>
-                </div>
-                <div class="carousel-item" style="background-image: url('https://live.staticflickr.com/65535/54507217731_45f5d8a562_o_d.jpg');">
-                    <div class="carousel-overlay"></div>
-                    <div class="container">
-                        <h1 class="display-3">Innovating Nutrition</h1>
-                        <p class="lead mb-4">Discover smarter ways to eat healthy.</p>
-                        <p>Our AI-driven tools help you make informed choices every day.</p>
-                        <a href="#features" class="btn btn-success btn-lg mt-3">Explore Our Solutions</a>
-                        <button type="button" class="btn btn-outline-light btn-lg mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#healthQuizModal">Take Our Health Quiz</button>
-                    </div>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="index.css">
+
+        <script src="xlsxToCSV.js"></script>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container">
+                <a class="navbar-brand">Innovating Nutrition</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </section>
+        </nav>
 
-    <!-- Health Quiz Modal -->
-    <div class="modal fade" id="healthQuizModal" tabindex="-1" aria-labelledby="healthQuizModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="healthQuizModalLabel">Find Your Health Path</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="healthQuizForm">
-                        <div class="mb-3">
-                            <label class="form-label">What is your primary health goal?</label>
-                            <select class="form-select" id="healthGoal" required>
-                                <option value="">Select a goal</option>
-                                <option value="weight-loss">Weight Loss</option>
-                                <option value="muscle-gain">Muscle Gain</option>
-                                <option value="general-wellness">General Wellness</option>
-                            </select>
+        <!-- Hero Section (Home) -->
+        <section id="home" class="hero-section">
+            <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" style="background-image: url('https://live.staticflickr.com/65535/54507403509_c2008d1ed1_o_d.jpg');">
+                        <div class="carousel-overlay"></div>
+                        <div class="container">
+                            <h1 class="display-3">Innovating Nutrition</h1>
+                            <p class="lead mb-4">Transforming lives through cutting-edge technology for a healthier, sustainable future.</p>
+                            <p>Our mission is to empower individuals with personalized nutrition solutions, leveraging AI, wearables, and data-driven insights to make healthy eating effortless and accessible.</p>
+                            <a href="#features" class="btn btn-success btn-lg mt-3">Explore Our Solutions</a>
+                            <button type="button" class="btn btn-outline-light btn-lg mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#healthQuizModal">Take Our Health Quiz</button>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Do you have any dietary preferences?</label>
-                            <select class="form-select" id="dietPreference">
-                                <option value="">None</option>
-                                <option value="vegan">Vegan</option>
-                                <option value="gluten-free">Gluten-Free</option>
-                                <option value="keto">Keto</option>
-                            </select>
+                    </div>
+                    <div class="carousel-item" style="background-image: url('https://live.staticflickr.com/65535/54507217731_45f5d8a562_o_d.jpg');">
+                        <div class="carousel-overlay"></div>
+                        <div class="container">
+                            <h1 class="display-3">Innovating Nutrition</h1>
+                            <p class="lead mb-4">Discover smarter ways to eat healthy.</p>
+                            <p>Our AI-driven tools help you make informed choices every day.</p>
+                            <a href="#features" class="btn btn-success btn-lg mt-3">Explore Our Solutions</a>
+                            <button type="button" class="btn btn-outline-light btn-lg mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#healthQuizModal">Take Our Health Quiz</button>
                         </div>
-                        <button type="submit" class="btn btn-success">Get Recommendations</button>
-                    </form>
-                    <div id="quizResult" class="mt-3 alert alert-info d-none">
-                        <h5>Personalized Recommendations</h5>
-                        <p id="quizResultText"></p>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Health Quiz Modal -->
+        <div class="modal fade" id="healthQuizModal" tabindex="-1" aria-labelledby="healthQuizModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="healthQuizModalLabel">Find Your Health Path</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="healthQuizForm">
+                            <div class="mb-3">
+                                <label class="form-label">What is your primary health goal?</label>
+                                <select class="form-select" id="healthGoal" required>
+                                    <option value="">Select a goal</option>
+                                    <option value="weight-loss">Weight Loss</option>
+                                    <option value="muscle-gain">Muscle Gain</option>
+                                    <option value="general-wellness">General Wellness</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Do you have any dietary preferences?</label>
+                                <select class="form-select" id="dietPreference">
+                                    <option value="">None</option>
+                                    <option value="vegan">Vegan</option>
+                                    <option value="gluten-free">Gluten-Free</option>
+                                    <option value="keto">Keto</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success">Get Recommendations</button>
+                        </form>
+                        <div id="quizResult" class="mt-3 alert alert-info d-none">
+                            <h5>Personalized Recommendations</h5>
+                            <p id="quizResultText"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Features Section -->
-    <section id="features" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Our Innovative Solutions</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card feature-card">
-                        <img src="https://live.staticflickr.com/65535/54507217731_45f5d8a562_o_d.jpg" class="card-img-top" alt="Nutrition Tracking">
-                        <div class="card-body">
-                            <h5 class="card-title">Smart Nutrition Tracking</h5>
-                            <p class="card-text">Our AI-powered platform analyzes your meals in real-time, providing personalized dietary recommendations based on your health goals, preferences, and nutritional needs.</p>
-                            <ul>
-                                <li>Scan meals with your smartphone camera.</li>
-                                <li>Receive instant nutrient breakdowns.</li>
-                                <li>Get tailored meal suggestions.</li>
+        <!-- Features Section -->
+        <section id="features" class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Our Innovative Solutions</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card feature-card">
+                            <img src="https://live.staticflickr.com/65535/54507217731_45f5d8a562_o_d.jpg" class="card-img-top" alt="Nutrition Tracking">
+                            <div class="card-body">
+                                <h5 class="card-title">Smart Nutrition Tracking</h5>
+                                <p class="card-text">Our AI-powered platform analyzes your meals in real-time, providing personalized dietary recommendations based on your health goals, preferences, and nutritional needs.</p>
+                                <ul>
+                                    <li>Scan meals with your smartphone camera.</li>
+                                    <li>Receive instant nutrient breakdowns.</li>
+                                    <li>Get tailored meal suggestions.</li>
+                                </ul>
+                                <a href="nutrition-tracking/" class="btn btn-outline-success">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card feature-card">
+                            <img src="https://live.staticflickr.com/65535/54507403289_98aa80683c_o_d.jpg" class="card-img-top" alt="Health Tech">
+                            <div class="card-body">
+                                <h5 class="card-title">Wearable Integration</h5>
+                                <p class="card-text">Seamlessly connect with smartwatches and fitness trackers to monitor your activity, heart rate, and sleep patterns, ensuring a holistic approach to wellness.</p>
+                                <ul>
+                                    <li>Syncs with popular devices like Apple Watch and Fitbit.</li>
+                                    <li>Tracks calories burned and activity levels.</li>
+                                    <li>Provides actionable health insights.</li>
+                                </ul>
+                                <a href="wearable-integration/" class="btn btn-outline-success">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card feature-card">
+                            <img src="https://live.staticflickr.com/65535/54506349337_f8f2d88e9c_o_d.jpg" class="card-img-top" alt="Recipes">
+                            <div class="card-body">
+                                <h5 class="card-title">Healthy Recipes</h5>
+                                <p class="card-text">Explore a curated library of nutritious, easy-to-prepare recipes designed to meet your dietary needs, from vegan to low-carb and everything in between.</p>
+                                <ul>
+                                    <li>Filter by dietary restrictions.</li>
+                                    <li>Step-by-step cooking instructions.</li>
+                                    <li>Nutritional info for every recipe.</li>
+                                </ul>
+                                <a href="healthy-recipes/" class="btn btn-outline-success">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">About Innovating Nutrition</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="https://live.staticflickr.com/65535/54507486603_0dc2950ddf_o_d.jpg" class="img-fluid mb-4" alt="Our Team">
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Our Vision</h3>
+                        <p>We envision a world where everyone has access to personalized nutrition solutions that enhance health and well-being. By combining technology with science, we aim to make healthy living simple, sustainable, and inclusive.</p>
+                        <h3>Our Team</h3>
+                        <p>Our team consists of nutritionists, data scientists, and tech innovators passionate about transforming the way people approach food. We work tirelessly to develop tools that empower you to make informed dietary choices.</p>
+                        <h3>Our Impact</h3>
+                        <p>Since our founding, we’ve helped thousands of users achieve their health goals through our innovative platform. From weight management to chronic disease prevention, our solutions are designed to make a lasting impact.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Get in Touch</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="contact-info">
+                            <h4>Contact Information</h4>
+                            <p>Have questions or want to collaborate? Reach out to us!</p>
+                            <ul class="list-unstyled">
+                                <li><strong>Email:</strong> <a href="mailto:info@innovatingnutrition.com">info@innovatingnutrition.com</a></li>
+                                <li><strong>Phone:</strong> +1 (123) 456-7890</li>
+                                <li><strong>Address:</strong> 123 Health Tech Lane, Wellness City, USA</li>
                             </ul>
-                            <a href="nutrition-tracking.html" class="btn btn-outline-success">Learn More</a>
+                            <h5>Follow Us</h5>
+                            <p>
+                                <a href="#" class="text-success me-2">Twitter</a>
+                                <a href="#" class="text-success me-2">Facebook</a>
+                                <a href="#" class="text-success">Instagram</a>
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card feature-card">
-                        <img src="https://live.staticflickr.com/65535/54507403289_98aa80683c_o_d.jpg" class="card-img-top" alt="Health Tech">
-                        <div class="card-body">
-                            <h5 class="card-title">Wearable Integration</h5>
-                            <p class="card-text">Seamlessly connect with smartwatches and fitness trackers to monitor your activity, heart rate, and sleep patterns, ensuring a holistic approach to wellness.</p>
-                            <ul>
-                                <li>Syncs with popular devices like Apple Watch and Fitbit.</li>
-                                <li>Tracks calories burned and activity levels.</li>
-                                <li>Provides actionable health insights.</li>
-                            </ul>
-                            <a href="wearable-integration.html" class="btn btn-outline-success">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card feature-card">
-                        <img src="https://live.staticflickr.com/65535/54506349337_f8f2d88e9c_o_d.jpg" class="card-img-top" alt="Recipes">
-                        <div class="card-body">
-                            <h5 class="card-title">Healthy Recipes</h5>
-                            <p class="card-text">Explore a curated library of nutritious, easy-to-prepare recipes designed to meet your dietary needs, from vegan to low-carb and everything in between.</p>
-                            <ul>
-                                <li>Filter by dietary restrictions.</li>
-                                <li>Step-by-step cooking instructions.</li>
-                                <li>Nutritional info for every recipe.</li>
-                            </ul>
-                            <a href="healthy-recipes.html" class="btn btn-outline-success">Learn More</a>
-                        </div>
+                    <div class="col-md-6">
+                        <div id="contactMessage" class="alert d-none"></div>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">Send Message</button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">About Innovating Nutrition</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="https://live.staticflickr.com/65535/54507486603_0dc2950ddf_o_d.jpg" class="img-fluid mb-4" alt="Our Team">
-                </div>
-                <div class="col-md-6">
-                    <h3>Our Vision</h3>
-                    <p>We envision a world where everyone has access to personalized nutrition solutions that enhance health and well-being. By combining technology with science, we aim to make healthy living simple, sustainable, and inclusive.</p>
-                    <h3>Our Team</h3>
-                    <p>Our team consists of nutritionists, data scientists, and tech innovators passionate about transforming the way people approach food. We work tirelessly to develop tools that empower you to make informed dietary choices.</p>
-                    <h3>Our Impact</h3>
-                    <p>Since our founding, we’ve helped thousands of users achieve their health goals through our innovative platform. From weight management to chronic disease prevention, our solutions are designed to make a lasting impact.</p>
-                </div>
+        <!-- Footer -->
+        <footer class="text-center">
+            <div class="container">
+                <p class="mb-2">© 2025 Innovating Nutrition. All Rights Reserved.</p>
+                <p>
+                    <a href="#" class="text-white me-2">Privacy Policy</a> |
+                    <a href="#" class="text-white ms-2">Terms of Service</a>
+                </p>
             </div>
-        </div>
-    </section>
+        </footer>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Get in Touch</h2>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="contact-info">
-                        <h4>Contact Information</h4>
-                        <p>Have questions or want to collaborate? Reach out to us!</p>
-                        <ul class="list-unstyled">
-                            <li><strong>Email:</strong> <a href="mailto:info@innovatingnutrition.com">info@innovatingnutrition.com</a></li>
-                            <li><strong>Phone:</strong> +1 (123) 456-7890</li>
-                            <li><strong>Address:</strong> 123 Health Tech Lane, Wellness City, USA</li>
-                        </ul>
-                        <h5>Follow Us</h5>
-                        <p>
-                            <a href="#" class="text-success me-2">Twitter</a>
-                            <a href="#" class="text-success me-2">Facebook</a>
-                            <a href="#" class="text-success">Instagram</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div id="contactMessage" class="alert d-none"></div>
-                    <form id="contactForm">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" id="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="container">
-            <p class="mb-2">© 2025 Innovating Nutrition. All Rights Reserved.</p>
-            <p>
-                <a href="#" class="text-white me-2">Privacy Policy</a> |
-                <a href="#" class="text-white ms-2">Terms of Service</a>
-            </p>
-        </div>
-    </footer>
-
-    <!-- XLSX Library for loadFileData -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-            return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-                try {
-                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                    var firstSheetName = workbook.SheetNames[0];
-                    var worksheet = workbook.Sheets[firstSheetName];
-                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                    var filteredData = jsonData.filter(row => row.some(filledCell));
-                    var headerRowIndex = filteredData.findIndex((row, index) =>
-                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                    );
-                    if (headerRowIndex === -1 || headerRowIndex > 25) {
-                        headerRowIndex = 0;
+        <!-- XLSX Library for loadFileData -->
+        <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Custom JS -->
+        <script type="text/javascript">
+            var gk_isXlsx = false;
+            var gk_xlsxFileLookup = {};
+            var gk_fileData = {};
+            function filledCell(cell) {
+                return cell !== '' && cell != null;
+            }
+            function loadFileData(filename) {
+                if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                    try {
+                        var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                        var firstSheetName = workbook.SheetNames[0];
+                        var worksheet = workbook.Sheets[firstSheetName];
+                        var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                        var filteredData = jsonData.filter(row => row.some(filledCell));
+                        var headerRowIndex = filteredData.findIndex((row, index) =>
+                            row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                        );
+                        if (headerRowIndex === -1 || headerRowIndex > 25) {
+                            headerRowIndex = 0;
+                        }
+                        var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                        csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                        return csv;
+                    } catch (e) {
+                        console.error('Error in loadFileData:', e);
+                        return "";
                     }
-                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
-                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                    return csv;
+                }
+                return gk_fileData[filename] || "";
+            }
+
+            // Initialize carousel explicitly
+            document.addEventListener('DOMContentLoaded', function() {
+                try {
+                    var carouselElement = document.querySelector('#heroCarousel');
+                    if (carouselElement) {
+                        new bootstrap.Carousel(carouselElement, {
+                            interval: 5000,
+                            wrap: true,
+                            touch: true
+                        });
+                    } else {
+                        console.error('Carousel element #heroCarousel not found');
+                    }
                 } catch (e) {
-                    console.error('Error in loadFileData:', e);
-                    return "";
-                }
-            }
-            return gk_fileData[filename] || "";
-        }
-
-        // Initialize carousel explicitly
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                var carouselElement = document.querySelector('#heroCarousel');
-                if (carouselElement) {
-                    new bootstrap.Carousel(carouselElement, {
-                        interval: 5000,
-                        wrap: true,
-                        touch: true
-                    });
-                } else {
-                    console.error('Carousel element #heroCarousel not found');
-                }
-            } catch (e) {
-                console.error('Error initializing carousel:', e);
-            }
-        });
-
-        // Smooth scrolling for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                    console.error('Error initializing carousel:', e);
                 }
             });
-        });
 
-        // Contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const contactMessage = document.getElementById('contactMessage');
-            contactMessage.classList.remove('d-none', 'alert-danger');
-            contactMessage.classList.add('alert-success');
-            contactMessage.textContent = `Thank you, ${name}! Your message has been sent.`;
-            this.reset();
-        });
+            // Smooth scrolling for nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
 
-        // Health quiz submission
-        document.getElementById('healthQuizForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const goal = document.getElementById('healthGoal').value;
-            const diet = document.getElementById('dietPreference').value;
-            const quizResult = document.getElementById('quizResult');
-            const quizResultText = document.getElementById('quizResultText');
-            let recommendation = '';
-            if (goal === 'weight-loss') {
-                recommendation = 'Try our <a href="nutrition-tracking.html">Smart Nutrition Tracking</a> to monitor calories and get low-calorie recipe suggestions.';
-            } else if (goal === 'muscle-gain') {
-                recommendation = 'Use our <a href="nutrition-tracking.html">Smart Nutrition Tracking</a> for high-protein meals and <a href="wearable-integration.html">Wearable Integration</a> to track workouts.';
-            } else if (goal === 'general-wellness') {
-                recommendation = 'Explore our <a href="healthy-recipes.html">Healthy Recipes</a> for balanced meals and <a href="wearable-integration.html">Wearable Integration</a> for holistic tracking.';
-            }
-            if (diet) {
-                recommendation += ` We recommend filtering for ${diet} recipes in our <a href="healthy-recipes.html">Healthy Recipes</a> section.`;
-            }
-            quizResultText.innerHTML = recommendation;
-            quizResult.classList.remove('d-none');
-            this.reset();
-        });
-    </script>
-</body>
+            // Contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                const contactMessage = document.getElementById('contactMessage');
+                contactMessage.classList.remove('d-none', 'alert-danger');
+                contactMessage.classList.add('alert-success');
+                contactMessage.textContent = `Thank you, ${name}! Your message has been sent.`;
+                this.reset();
+            });
+
+            // Health quiz submission
+            document.getElementById('healthQuizForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const goal = document.getElementById('healthGoal').value;
+                const diet = document.getElementById('dietPreference').value;
+                const quizResult = document.getElementById('quizResult');
+                const quizResultText = document.getElementById('quizResultText');
+                let recommendation = '';
+                if (goal === 'weight-loss') {
+                    recommendation = 'Try our <a href="nutrition-tracking/">Smart Nutrition Tracking</a> to monitor calories and get low-calorie recipe suggestions.';
+                } else if (goal === 'muscle-gain') {
+                    recommendation = 'Use our <a href="nutrition-tracking/">Smart Nutrition Tracking</a> for high-protein meals and <a href="wearable-integration/">Wearable Integration</a> to track workouts.';
+                } else if (goal === 'general-wellness') {
+                    recommendation = 'Explore our <a href="healthy-recipes/">Healthy Recipes</a> for balanced meals and <a href="wearable-integration/">Wearable Integration</a> for holistic tracking.';
+                }
+                if (diet) {
+                    recommendation += ` We recommend filtering for ${diet} recipes in our <a href="healthy-recipes/">Healthy Recipes</a> section.`;
+                }
+                quizResultText.innerHTML = recommendation;
+                quizResult.classList.remove('d-none');
+                this.reset();
+            });
+        </script>
+    </body>
 </html>

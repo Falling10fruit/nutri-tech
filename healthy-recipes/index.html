@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Healthy Recipes - Innovating Nutrition</title>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="index.css">
+
+        <script src="xlsxToCSV.js"></script>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="../">Innovating Nutrition</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="display-4">Healthy Recipes</h1>
+                <p class="lead">Delicious, nutritious meals tailored to your needs.</p>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <h2>Explore Our Recipe Library</h2>
+                        <p>Our curated collection of healthy recipes is designed to make nutritious eating enjoyable and accessible. From breakfast to dinner, find meals that align with your dietary preferences and health goals.</p>
+                        <ul>
+                            <li><strong>Custom Filters:</strong> Sort by vegan, keto, gluten-free, or other diets.</li>
+                            <li><strong>Step-by-Step Guides:</strong> Easy instructions for all skill levels.</li>
+                            <li><strong>Nutritional Data:</strong> Detailed breakdowns for every recipe.</li>
+                        </ul>
+                        <a href="../#contact" class="btn btn-success">Get Started</a>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <img src="https://live.staticflickr.com/65535/54507217786_f0f42a6e63_o_d.jpg" class="feature-img" alt="Healthy Cooking">
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <h2>Search Recipes</h2>
+                        <p>Try our recipe search to find meals that suit your diet.</p>
+                        <form id="recipeSearchForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" class="form-control" id="searchQuery" placeholder="Search recipes (e.g., salad, keto)">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <select class="form-select" id="dietFilter">
+                                        <option value="">All Diets</option>
+                                        <option value="vegan">Vegan</option>
+                                        <option value="gluten-free">Gluten-Free</option>
+                                        <option value="keto">Keto</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <button type="submit" class="btn btn-success w-100">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="ratingMessage" class="alert alert-success mt-3"></div>
+                        <div id="recipeList" class="row mt-3"></div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <h2>Why Choose Our Recipes</h2>
+                        <p>Our recipes are crafted by nutritionists to ensure they’re both delicious and good for you. Discover meals that fit your lifestyle and inspire healthy eating every day.</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5>Variety</h5>
+                                <p>Hundreds of recipes across cuisines and diets.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>Convenience</h5>
+                                <p>Quick-prep options for busy schedules.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>Health-Focused</h5>
+                                <p>Designed to support your wellness goals.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center">
+            <div class="container">
+                <p class="mb-2">© 2025 Innovating Nutrition. All Rights Reserved.</p>
+                <p>
+                    <a href="#" class="text-white me-2">Privacy Policy</a> |
+                    <a href="#" class="text-white ms-2">Terms of Service</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
