@@ -1,14 +1,3 @@
-// Smooth scrolling for nav links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-});
-
 // Recipe search and rating system
 const recipes = [
     { name: 'Vegan Quinoa Salad', diet: 'vegan', description: 'A fresh salad with quinoa, avocado, and veggies.', image: 'https://live.staticflickr.com/65535/54507567830_79e6f2e82c_o_d.jpg', ratings: [], averageRating: 0, userRating: 0 },

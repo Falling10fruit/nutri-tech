@@ -7,8 +7,6 @@
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="index.css">
-
-        <script src="xlsxToCSV.js"></script>
     </head>
     <body>
         <!-- Navigation -->
@@ -241,107 +239,10 @@
             </div>
         </footer>
 
-        <!-- XLSX Library for loadFileData -->
         <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-        <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Custom JS -->
-        <script type="text/javascript">
-            var gk_isXlsx = false;
-            var gk_xlsxFileLookup = {};
-            var gk_fileData = {};
-            function filledCell(cell) {
-                return cell !== '' && cell != null;
-            }
-            function loadFileData(filename) {
-                if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-                    try {
-                        var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                        var firstSheetName = workbook.SheetNames[0];
-                        var worksheet = workbook.Sheets[firstSheetName];
-                        var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                        var filteredData = jsonData.filter(row => row.some(filledCell));
-                        var headerRowIndex = filteredData.findIndex((row, index) =>
-                            row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                        );
-                        if (headerRowIndex === -1 || headerRowIndex > 25) {
-                            headerRowIndex = 0;
-                        }
-                        var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
-                        csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                        return csv;
-                    } catch (e) {
-                        console.error('Error in loadFileData:', e);
-                        return "";
-                    }
-                }
-                return gk_fileData[filename] || "";
-            }
-
-            // Initialize carousel explicitly
-            document.addEventListener('DOMContentLoaded', function() {
-                try {
-                    var carouselElement = document.querySelector('#heroCarousel');
-                    if (carouselElement) {
-                        new bootstrap.Carousel(carouselElement, {
-                            interval: 5000,
-                            wrap: true,
-                            touch: true
-                        });
-                    } else {
-                        console.error('Carousel element #heroCarousel not found');
-                    }
-                } catch (e) {
-                    console.error('Error initializing carousel:', e);
-                }
-            });
-
-            // Smooth scrolling for nav links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-
-            // Contact form submission
-            document.getElementById('contactForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const message = document.getElementById('message').value;
-                const contactMessage = document.getElementById('contactMessage');
-                contactMessage.classList.remove('d-none', 'alert-danger');
-                contactMessage.classList.add('alert-success');
-                contactMessage.textContent = `Thank you, ${name}! Your message has been sent.`;
-                this.reset();
-            });
-
-            // Health quiz submission
-            document.getElementById('healthQuizForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const goal = document.getElementById('healthGoal').value;
-                const diet = document.getElementById('dietPreference').value;
-                const quizResult = document.getElementById('quizResult');
-                const quizResultText = document.getElementById('quizResultText');
-                let recommendation = '';
-                if (goal === 'weight-loss') {
-                    recommendation = 'Try our <a href="nutrition-tracking/">Smart Nutrition Tracking</a> to monitor calories and get low-calorie recipe suggestions.';
-                } else if (goal === 'muscle-gain') {
-                    recommendation = 'Use our <a href="nutrition-tracking/">Smart Nutrition Tracking</a> for high-protein meals and <a href="wearable-integration/">Wearable Integration</a> to track workouts.';
-                } else if (goal === 'general-wellness') {
-                    recommendation = 'Explore our <a href="healthy-recipes/">Healthy Recipes</a> for balanced meals and <a href="wearable-integration/">Wearable Integration</a> for holistic tracking.';
-                }
-                if (diet) {
-                    recommendation += ` We recommend filtering for ${diet} recipes in our <a href="healthy-recipes/">Healthy Recipes</a> section.`;
-                }
-                quizResultText.innerHTML = recommendation;
-                quizResult.classList.remove('d-none');
-                this.reset();
-            });
-        </script>
+        <script src="js/xlsxToCSV.js"></script>
+        <script src="js/smoothNavScroll.js"></script>
+        <script src="index.js"></script>
     </body>
 </html>
