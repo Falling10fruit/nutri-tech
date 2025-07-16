@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Healthy Recipes - Innovating Nutrition</title>
+        <title>Wearable Integration - Innovating Nutrition</title>
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="index.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     </head>
     <body>
         <!-- Navigation -->
@@ -38,8 +40,8 @@
         <!-- Hero Section -->
         <section class="hero-section">
             <div class="container">
-                <h1 class="display-4">Healthy Recipes</h1>
-                <p class="lead">Delicious, nutritious meals tailored to your needs.</p>
+                <h1 class="display-4">Wearable Integration</h1>
+                <p class="lead">Connect your devices for a holistic health experience.</p>
             </div>
         </section>
 
@@ -48,61 +50,55 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 mb-4">
-                        <h2>Explore Our Recipe Library</h2>
-                        <p>Our curated collection of healthy recipes is designed to make nutritious eating enjoyable and accessible. From breakfast to dinner, find meals that align with your dietary preferences and health goals.</p>
+                        <h2>Seamless Connectivity</h2>
+                        <p>Our platform integrates with popular wearables like Apple Watch, Fitbit, and Garmin to track your physical activity, heart rate, and sleep patterns. This data is combined with your nutrition profile to provide comprehensive health insights.</p>
                         <ul>
-                            <li><strong>Custom Filters:</strong> Sort by vegan, keto, gluten-free, or other diets.</li>
-                            <li><strong>Step-by-Step Guides:</strong> Easy instructions for all skill levels.</li>
-                            <li><strong>Nutritional Data:</strong> Detailed breakdowns for every recipe.</li>
+                            <li><strong>Device Syncing:</strong> Connect in seconds with our app.</li>
+                            <li><strong>Real-Time Monitoring:</strong> Track metrics like steps, calories, and sleep quality.</li>
+                            <li><strong>Health Insights:</strong> Receive tips based on your activity and nutrition data.</li>
                         </ul>
-                        <a href="../index.html#contact" class="btn btn-success">Get Started</a>
+                        <a href="index.html#contact" class="btn btn-success">Get Started</a>
                     </div>
                     <div class="col-md-6 mb-4">
-                        <img src="https://live.staticflickr.com/65535/54507217786_f0f42a6e63_o_d.jpg" class="feature-img" alt="Healthy Cooking">
+                        <img src="https://live.staticflickr.com/65535/54507403289_98aa80683c_o_d.jpg" class="feature-img" alt="Wearable Device">
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-12">
-                        <h2>Search Recipes</h2>
-                        <p>Try our recipe search to find meals that suit your diet.</p>
-                        <form id="recipeSearchForm">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <input type="text" class="form-control" id="searchQuery" placeholder="Search recipes (e.g., salad, keto)">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <select class="form-select" id="dietFilter">
-                                        <option value="">All Diets</option>
-                                        <option value="vegan">Vegan</option>
-                                        <option value="gluten-free">Gluten-Free</option>
-                                        <option value="keto">Keto</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2 mb-3">
-                                    <button type="submit" class="btn btn-success w-100">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="ratingMessage" class="alert alert-success mt-3"></div>
-                        <div id="recipeList" class="row mt-3"></div>
+                        <h2>Live Activity Tracker</h2>
+                        <p>Experience real-time step tracking with our wearable integration.</p>
+                        <div class="live-tracker">
+                            <h3 id="liveSteps">0</h3>
+                            <p>Steps Today</p>
+                            <button class="btn btn-success" onclick="startTracker()">Start Tracker</button>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-12">
-                        <h2>Why Choose Our Recipes</h2>
-                        <p>Our recipes are crafted by nutritionists to ensure they’re both delicious and good for you. Discover meals that fit your lifestyle and inspire healthy eating every day.</p>
+                        <h2>Sample Activity Dashboard</h2>
+                        <p>Visualize your wearable data with our intuitive charts.</p>
+                        <div class="chart-container">
+                            <canvas id="activityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <h2>Why It Matters</h2>
+                        <p>Wearable integration bridges the gap between nutrition and physical health, giving you a complete picture of your wellness journey. Stay motivated with personalized goals and actionable feedback.</p>
                         <div class="row">
                             <div class="col-md-4">
-                                <h5>Variety</h5>
-                                <p>Hundreds of recipes across cuisines and diets.</p>
+                                <h5>Holistic Tracking</h5>
+                                <p>Combines nutrition and activity data for better results.</p>
                             </div>
                             <div class="col-md-4">
-                                <h5>Convenience</h5>
-                                <p>Quick-prep options for busy schedules.</p>
+                                <h5>Motivation</h5>
+                                <p>Visualize progress with intuitive dashboards.</p>
                             </div>
                             <div class="col-md-4">
-                                <h5>Health-Focused</h5>
-                                <p>Designed to support your wellness goals.</p>
+                                <h5>Compatibility</h5>
+                                <p>Works with a wide range of wearable devices.</p>
                             </div>
                         </div>
                     </div>
