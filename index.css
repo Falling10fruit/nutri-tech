@@ -6,7 +6,6 @@ body {
 .hero-section {
     position: relative;
     color: white;
-    padding: 150px 0;
     text-align: center;
 }
 
@@ -29,6 +28,8 @@ body {
 .hero-section .container {
     position: relative;
     z-index: 2; /* Text content above overlay */
+    height: 500px;
+    padding: 50px;
 }
 
 .carousel-control-prev, .carousel-control-next {
@@ -47,6 +48,7 @@ body {
 
 .navbar {
     background-color: #28a745;
+    position: sticky;
 }
 
 .navbar-brand, .nav-link {
